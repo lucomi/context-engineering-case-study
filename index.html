@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lucas Mills - Context Engineering Case Study</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1e40af;
+            --secondary: #10b981;
+            --accent: #f59e0b;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --border: #e2e8f0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: var(--light);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .hero .subtitle {
+            font-size: 1.5em;
+            opacity: 0.95;
+            margin-bottom: 30px;
+        }
+
+        .hero .intro {
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 1.1em;
+            line-height: 1.8;
+            opacity: 0.9;
+        }
+
+        /* Stats Bar */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: -60px auto 0;
+            padding: 0 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .stat-card .number {
+            font-size: 2.5em;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .stat-card .label {
+            color: var(--gray);
+            font-size: 0.95em;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 20px;
+        }
+
+        /* Section Headers */
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-header h2 {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+
+        .section-header .underline {
+            width: 80px;
+            height: 4px;
+            background: var(--primary);
+            margin: 0 auto;
+        }
+
+        /* Experience Cards */
+        .experience-grid {
+            display: grid;
+            gap: 40px;
+        }
+
+        .experience-card {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-left: 4px solid var(--primary);
+        }
+
+        .experience-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.12);
+        }
+
+        .experience-card h3 {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .experience-card .icon {
+            background: var(--primary);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+        }
+
+        .experience-card p {
+            color: var(--gray);
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+
+        .experience-card ul {
+            list-style: none;
+            margin-top: 20px;
+        }
+
+        .experience-card li {
+            padding: 12px 0;
+            padding-left: 30px;
+            position: relative;
+            color: var(--dark);
+        }
+
+        .experience-card li:before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        /* Highlight Box */
+        .highlight-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 12px;
+            margin: 60px 0;
+        }
+
+        .highlight-box h3 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        .highlight-box p {
+            font-size: 1.1em;
+            line-height: 1.8;
+            opacity: 0.95;
+        }
+
+        /* Metrics Grid */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .metric-card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .metric-card .metric-value {
+            font-size: 2.5em;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 10px;
+        }
+
+        .metric-card .metric-label {
+            color: var(--gray);
+            font-size: 1em;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding: 40px 0;
+        }
+
+        .timeline:before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: var(--border);
+        }
+
+        .timeline-item {
+            display: flex;
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .timeline-item:nth-child(odd) {
+            flex-direction: row-reverse;
+        }
+
+        .timeline-content {
+            width: 45%;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .timeline-content h4 {
+            color: var(--primary);
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        .timeline-marker {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 20px;
+            background: var(--primary);
+            border-radius: 50%;
+            border: 4px solid white;
+            box-shadow: 0 0 0 4px var(--primary);
+        }
+
+        /* Tech Stack */
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 30px 0;
+        }
+
+        .tech-badge {
+            background: var(--light);
+            border: 2px solid var(--border);
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 0.95em;
+            font-weight: 500;
+            color: var(--dark);
+            transition: all 0.3s ease;
+        }
+
+        .tech-badge:hover {
+            border-color: var(--primary);
+            background: var(--primary);
+            color: white;
+        }
+
+        /* CTA Section */
+        .cta {
+            background: var(--dark);
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .cta h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        .cta p {
+            font-size: 1.2em;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto 30px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 15px 40px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1em;
+            transition: background 0.3s ease;
+        }
+
+        .cta-button:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Navigation */
+        nav {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav .logo {
+            font-weight: 700;
+            font-size: 1.3em;
+            color: var(--primary);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--primary);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2em;
+            }
+
+            .hero .subtitle {
+                font-size: 1.2em;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+                margin-top: 40px;
+            }
+
+            .timeline:before {
+                left: 30px;
+            }
+
+            .timeline-item {
+                flex-direction: column !important;
+            }
+
+            .timeline-content {
+                width: calc(100% - 60px);
+                margin-left: 60px;
+            }
+
+            .timeline-marker {
+                left: 30px;
+            }
+
+            nav ul {
+                display: none;
+            }
+        }
+
+        /* Code Block Styling */
+        pre {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-size: 0.9em;
+        }
+
+        code {
+            font-family: 'Courier New', monospace;
+        }
+
+        /* Accordion */
+        .accordion-item {
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .accordion-header {
+            padding: 20px 30px;
+            cursor: pointer;
+            background: var(--light);
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s ease;
+        }
+
+        .accordion-header:hover {
+            background: var(--border);
+        }
+
+        .accordion-content {
+            padding: 0 30px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+
+        .accordion-content.active {
+            padding: 20px 30px;
+            max-height: 2000px;
+        }
+
+        .accordion-icon {
+            transition: transform 0.3s ease;
+        }
+
+        .accordion-icon.active {
+            transform: rotate(180deg);
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <div class="logo">Lucas Mills</div>
+            <ul>
+                <li><a href="#overview">Overview</a></li>
+                <li><a href="#beacons">Beacons</a></li>
+                <li><a href="#insights">AI Insights</a></li>
+                <li><a href="#platform">Platform</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="hero">
+        <h1>Context Engineering at Scale</h1>
+        <p class="subtitle">Building RAG Systems & Multi-Signal Intelligence Platforms</p>
+        <p class="intro">
+            A case study on architecting production RAG systems, integrating proprietary behavioral signals, 
+            and building reusable platform infrastructure that doubled ARR from $2M to $4.5M at GovTribe.
+        </p>
+    </div>
+
+    <div class="stats">
+        <div class="stat-card">
+            <div class="number">2.25x</div>
+            <div class="label">ARR Growth</div>
+        </div>
+        <div class="stat-card">
+            <div class="number">76%</div>
+            <div class="label">Alert Relevance Rate</div>
+        </div>
+        <div class="stat-card">
+            <div class="number">25%</div>
+            <div class="label">DAU Increase</div>
+        </div>
+        <div class="stat-card">
+            <div class="number">60%</div>
+            <div class="label">Faster Second Product</div>
+        </div>
+    </div>
+
+    <div class="container" id="overview">
+        <div class="section-header">
+            <h2>Executive Summary</h2>
+            <div class="underline"></div>
+        </div>
+
+        <div class="highlight-box">
+            <h3>The Challenge</h3>
+            <p>
+                GovTribe needed to transform 100,000+ weekly government procurement contracts into actionable 
+                intelligence for contractors. The solution required building production RAG systems that could 
+                understand user intent beyond explicit queries—leveraging behavioral signals, semantic matching, 
+                and multi-source context assembly to deliver personalized insights at scale.
+            </p>
+        </div>
+
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-value">100K+</div>
+                <div class="metric-label">Contracts Processed Weekly</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">10K+</div>
+                <div class="metric-label">Active Users</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">$720K+</div>
+                <div class="metric-label">Annual API Budget Managed</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">3→8</div>
+                <div class="metric-label">Team Scaling</div>
+            </div>
+        </div>
+
+        <div class="experience-card">
+            <h3>
+                <span class="icon">🎯</span>
+                My Role
+            </h3>
+            <p>
+                As Product Manager for AI & Data Products, I architected and shipped two production RAG systems—AI Insights 
+                and Beacons—from zero to production. I owned the entire R&D-to-production pipeline: prototyping retrieval 
+                strategies, establishing evaluation frameworks, integrating proprietary behavioral signals, and building 
+                reusable platform infrastructure that accelerated subsequent feature delivery by 60%.
+            </p>
+            <ul>
+                <li>Prototyped RAG architectures in Python to validate technical feasibility before engineering built</li>
+                <li>Established LLM evaluation frameworks measuring quality, cost, and business impact</li>
+                <li>Designed multi-signal context assembly synthesizing explicit preferences, behavioral data, and semantic matching</li>
+                <li>Built platform components (embedding pipelines, evaluation harness, monitoring) reused across products</li>
+                <li>Scaled engineering team 3→8 while improving velocity through documentation and reusable infrastructure</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="container" id="beacons">
+        <div class="section-header">
+            <h2>Beacons: Multi-Signal Personalization Engine</h2>
+            <div class="underline"></div>
+        </div>
+
+        <div class="experience-card">
+            <h3>
+                <span class="icon">🚀</span>
+                The Innovation
+            </h3>
+            <p>
+                Beacons was an intelligent alert system that went beyond keyword matching. By integrating proprietary 
+                readership data from GovExec's media properties (Defense One, NextGov, Federal Computer Week), we could 
+                understand what government buyers and contractors were actually interested in—not just what they said 
+                they wanted.
+            </p>
+        </div>
+
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h4>Signal Capture Architecture</h4>
+                    <p>
+                        Designed pipeline to ingest readership events from GovExec's analytics platform—which articles 
+                        each user read, dwell time indicating engagement depth, search queries, and topic following patterns. 
+                        This created a behavioral signal layer showing implicit interest beyond explicit preferences.
+                    </p>
+                </div>
+                <div class="timeline-marker"></div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h4>Topic Extraction & Heat Map Generation</h4>
+                    <p>
+                        Built taxonomy mapping GovExec articles and contract solicitations to common topics (cybersecurity, 
+                        zero trust, cloud migration, AI/ML). Generated dynamic interest profiles: if a user read 5 articles 
+                        about zero trust in the past week, signal strength = 0.9 (high). Updated daily as behavior changed.
+                    </p>
+                </div>
+                <div class="timeline-marker"></div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h4>Multi-Signal Matching Algorithm</h4>
+                    <p>
+                        Synthesized three context sources: explicit preferences (saved searches, NAICS codes), behavioral 
+                        signals (readership heat map), and historical patterns (past contract engagement). Composite scoring 
+                        function weighted: 50% semantic similarity, 30% readership boost, 20% historical pattern match.
+                    </p>
+                </div>
+                <div class="timeline-marker"></div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h4>Continuous Learning Loop</h4>
+                    <p>
+                        Captured feedback to improve matching: implicit positive (opened alert, saved contract), implicit 
+                        negative (dismissed without opening), explicit feedback (thumbs up/down). Iteratively improved signal 
+                        weighting through A/B testing, achieving 76% relevance rate.
+                    </p>
+                </div>
+                <div class="timeline-marker"></div>
+            </div>
+        </div>
+
+        <div class="experience-card">
+            <h3>
+                <span class="icon">💡</span>
+                Technical Deep Dive: Context Assembly
+            </h3>
+            <p>
+                The core technical challenge was assembling rich, multi-signal context while respecting token budgets 
+                and latency constraints.
+            </p>
+            
+            <pre><code>// Composite Scoring Function
+match_score = (
+    0.5 * cosine_similarity(contract_embedding, user_interest_embedding) +
+    0.3 * readership_signal_boost +  // GovExec topic alignment
+    0.2 * historical_pattern_boost   // Past engagement patterns
+)
+
+// Readership Signal Boost Calculation
+readership_boost = 0
+if contract_topic in user_readership_heatmap:
+    signal_strength = user_readership_heatmap[contract_topic]  // 0.0-1.0
+    signal_strength *= exp(-days_since_read / 30)  // Exponential decay
+    readership_boost = signal_strength * 0.3  // Max 30% boost
+
+// Final Ranking with Diversity Constraints
+ranked_alerts = sort_by_score(candidates)
+selected = apply_diversity_rules(ranked_alerts, max_per_topic=2)
+</code></pre>
+        </div>
+
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-value">76%</div>
+                <div class="metric-label">Relevance Rate<br>(vs 40% keyword-only)</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">2.3x</div>
+                <div class="metric-label">Conversion on Readership-Driven Alerts</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">50%</div>
+                <div class="metric-label">Lower Churn Rate<br>(Beacons vs Non-Users)</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">17%</div>
+                <div class="metric-label">Improvement from Behavioral Signals</div>
+            </div>
+        </div>
+
+        <div class="experience-card">
+            <h3>
+                <span class="icon">⚡</span>
+                Key Results & Impact
+            </h3>
+            <ul>
+                <li><strong>76% alert relevance rate</strong> - Users engaged with 3 out of 4 alerts sent</li>
+                <li><strong>2.3x higher conversion</strong> on readership-signal-driven alerts vs explicit-only</li>
+                <li><strong>50% lower churn</strong> - Beacons users retained at 2x rate of non-users</li>
+                <li><strong>Real-world success story:</strong> Defense contractor wasn't searching for "zero trust" contracts, but readership data showed heavy consumption of zero trust content on Defense One. Beacons surfaced DOD zero trust solicitation. They won $12M contract. Customer feedback: "I didn't even know to search for this, but Beacons knew I'd be interested."</li>
+                <li><strong>Platform value:</strong> Signal integration layer built for Beacons was reused for AI Insights, reducing integration time from 6 weeks to 2 weeks</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="container" id="insights">
+        <div class="section-header">
+            <h2>AI Insights: RAG-Powered Intelligence</h2>
+            <div class="underline"></div>
+        </div>
+
+        <div class="experience-card">
+            <h3>
+                <span class="icon">🔍</span>
+                The Problem
+            </h3>
+            <p>
+                Government contractors were drowning in procurement data—100,000+ new contracts weekly, each 50+ pages 
+                of dense legal and technical language. Finding relevant opportunities required hours of manual research. 
+                Users needed natural language query capability: "Who are likely bidders for this DOD cybersecurity RFP?" 
+                or "What compliance risks exist in this solicitation?"
+            </p>
+        </div>
+
+        <div class="experience-card">
+            <h3>
+                <span class="icon">🏗️</span>
+                RAG Architecture I Built
+            </h3>
+            <ul>
+                <li><strong>Data Enrichment Pipeline:</strong> Processed 100K+ contracts weekly, extracting metadata (NAICS codes, agency classifications, vendor relationships, historical patterns)</li>
+                <li><strong>Embedding Generation:</strong> Used OpenAI text-embedding-ada-002 (1536 dimensions) to create semantic representations of contracts</li>
+                <li><strong>Vector Storage:</strong> Elasticsearch with cosine similarity indexing for sub-500ms retrieval at scale</li>
+                <li><strong>Context Compression:</strong> Reduced 8,000-token solicitations to 1,200 tokens while maintaining >90% accuracy through extractive summarization</li>
+                <li><strong>LLM Integration:</strong> OpenAI Chat Completions API with tiered routing (GPT-3.5 for simple queries, GPT-4 for complex analysis)</li>
+                <li><strong>Prompt Engineering:</strong> Structured outputs, few-shot examples, chain-of-thought reasoning for premium tier</li>
+            </ul>
+        </div>
+
+        <div class="experience-card">
+            <h3>
+                <span class="icon">📊</span>
+                Evaluation Framework I Established
+            </h3>
+            <p>
+                Built comprehensive measurement system across offline benchmarks, production monitoring, and continuous experimentation:
+            </p>
+            <ul>
+                <li><strong>Offline Benchmarks:</strong> Created 200+ labeled Q&A pairs, measured retrieval precision/recall, answer relevance (1-5 rubric), hallucination rate</li>
+                <li><strong>Model Selection:</strong> Compared GPT-3.5 vs GPT-4 - discovered 40% better accuracy but 10x cost, led to tiered routing strategy</li>
+                <li><strong>Production Monitoring:</strong> Power BI dashboards tracking API latency (p50/p95/p99), cost per query, user engagement, hallucination incidents</li>
+                <li><strong>A/B Testing:</strong> Semantic chunking (+18% quality), HyDE retrieval (killed due to latency), chain-of-thought (+35% accuracy, premium only)</li>
+                <li><strong>Cost Optimization:</strong> Identified inefficient prompts wasting tokens, refactored and saved $8K/month; implemented caching reducing API calls 40%</li>
+            </ul>
+        </div>
+
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-value">25%</div>
+                <div class="metric-label">DAU Engagement Increase</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">&lt;500ms</div>
+                <div class="metric-label">P95 Retrieval Latency</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">85%</div>
+                <div class="metric-label">Token Reduction<br>(8K→1.2K)</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">&lt;5%</div>
+                <div class="metric-label">Hallucination Rate</div>
+            </div>
+        </div>
+
+        <div class="highlight-box">
+            <h3>Business Impact</h3>
+            <p>
+                AI Insights became a core competitive differentiator. The 25% increase in DAU engagement directly 
+                correlated with improved retention. We established a new premium pricing tier based on advanced AI 
+                features (GPT-4, chain-of-thought reasoning, deeper analysis), creating a new revenue stream. The 
+                feature contributed significantly to doubling ARR from $2M to $4.5M over 18 months.
+            </p>
+        </div>
+    </div>
+
+    <div class="container" id="platform">
+        <div class="section-header">
+            <h2>Platform Thinking: Reusable Infrastructure</h2>
+            <div class="underline"></div>
+        </div>
+
+        <div class="experience-card">
+            <h3>
+                <span class="icon">🔧</span>
+                From Custom to Platform
+            </h3>
+            <p>
+                The key insight: Extract reusable patterns from first product (AI Insights) to accelerate second 
+                product (Beacons) and beyond.
+            </p>
+        </div>
+
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h4>AI Insights (4 months)</h4>
+                    <p>
+                        Built everything custom: prompt templates, evaluation logic, API integration patterns, monitoring 
+                        dashboards, embedding pipelines. Learned what worked, what didn't, what could be abstracted.
+                    </p>
+                </div>
+                <div class="timeline-marker"></div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h4>Platform Extraction</h4>
+                    <p>
+                        Identified reusable components: embedding generation infrastructure, evaluation harness for A/B 
+                        testing, cost monitoring dashboards, prompt template library, signal integration layer, context 
+                        compression utilities.
+                    </p>
+                </div>
+                <div class="timeline-marker"></div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h4>Beacons (2.5 months - 60% faster)</h4>
+                    <p>
+                        Leveraged platform components: reused embedding pipeline for semantic matching, plugged into 
+                        existing evaluation framework, added metrics to monitoring dashboards, adapted prompt patterns. 
+                        Engineers focused on unique matching logic, not infrastructure.
+                    </p>
+                </div>
+                <div class="timeline-marker"></div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h4>Platform Compounds</h4>
+                    <p>
+                        Signal integration layer built for Beacons (GovExec readership data) was reused to enhance AI 
+                        Insights with behavioral context. Third AI feature shipped in 3 weeks. Platform value compounds 
+                        with each use.
+                    </p>
+                </div>
+                <div class="timeline-marker"></div>
+            </div>
+        </div>
+
+        <div class="experience-card">
+            <h3>
+                <span class="icon">🛠️</span>
+                Platform Components Built
+            </h3>
+            <div class="tech-stack">
+                <span class="tech-badge">Embedding Pipeline (OpenAI API)</span>
+                <span class="tech-badge">Vector Storage (Elasticsearch)</span>
+                <span class="tech-badge">Signal Integration Layer</span>
+                <span class="tech-badge">Context Compression Utilities</span>
+                <span class="tech-badge">Evaluation Harness (A/B Testing)</span>
+                <span class="tech-badge">Prompt Template Library</span>
+                <span class="tech-badge">Cost Monitoring (Power BI)</span>
+                <span class="tech-badge">Quality Dashboards</span>
+                <span class="tech-badge">Multi-Signal Scoring Engine</span>
+            </div>
+        </div>
+
+        <div class="experience-card">
+            <h3>
+                <span class="icon">📈</span>
+                Engineering Velocity Impact
+            </h3>
+            <ul>
+                <li><strong>Team scaling:</strong> Grew from 3 to 8 engineers while improving (not degrading) velocity</li>
+                <li><strong>Feature delivery:</strong> 8-week cycles reduced to 3-week cycles through reusable components</li>
+                <li><strong>Onboarding time:</strong> New engineers productive in 2 weeks (vs 6 weeks) due to documentation and patterns</li>
+                <li><strong>Technical debt reduction:</strong> Standardized approaches prevented divergent implementations</li>
+                <li><strong>Knowledge sharing:</strong> Platform components became teaching tools for junior engineers</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="section-header">
+            <h2>Technical Skills Applied</h2>
+            <div class="underline"></div>
+        </div>
+
+        <div class="experience-card">
+            <h3>
+                <span class="icon">💻</span>
+                Hands-On Technical Work
+            </h3>
+            <p>
+                I wasn't managing at arm's length—I was in the code, prototyping solutions, and making informed 
+                architectural decisions.
+            </p>
+            <ul>
+                <li><strong>Python:</strong> Wrote evaluation scripts, API integration prototypes, data analysis in Jupyter notebooks</li>
+                <li><strong>SQL:</strong> Optimized queries across Databricks/Redshift/Teradata for data analysis and pipeline design</li>
+                <li><strong>Vector Databases:</strong> Configured Elasticsearch for cosine similarity search, indexing strategies, performance tuning</li>
+                <li><strong>LLM APIs:</strong> Integrated OpenAI Chat Completions API, managed prompt engineering, cost optimization</li>
+                <li><strong>Embeddings:</strong> Tested OpenAI vs Cohere models, optimized dimensionality, caching strategies</li>
+                <li><strong>Data Pipelines:</strong> Designed ETL for contract enrichment, readership signal integration, real-time vs batch decisions</li>
+                <li><strong>Monitoring:</strong> Built Power BI dashboards for quality metrics, cost tracking, user engagement</li>
+            </ul>
+        </div>
+
+        <div class="tech-stack">
+            <span class="tech-badge">Python</span>
+            <span class="tech-badge">SQL</span>
+            <span class="tech-badge">OpenAI API</span>
+            <span class="tech-badge">Elasticsearch</span>
+            <span class="tech-badge">Vector Embeddings</span>
+            <span class="tech-badge">RAG Architecture</span>
+            <span class="tech-badge">Prompt Engineering</span>
+            <span class="tech-badge">A/B Testing</span>
+            <span class="tech-badge">Power BI</span>
+            <span class="tech-badge">Data Pipelines</span>
+            <span class="tech-badge">Redis</span>
+            <span class="tech-badge">PostgreSQL</span>
+            <span class="tech-badge">AWS</span>
+            <span class="tech-badge">Databricks</span>
+            <span class="tech-badge">Redshift</span>
+        </div>
+    </div>
+
+    <div class="cta" id="contact">
+        <h2>Ready to Build Context Engineering at Scale</h2>
+        <p>
+            I've done this at GovTribe—architected RAG systems, integrated multi-signal context, built reusable 
+            platform infrastructure. I'm ready to do it at ZoomInfo's scale for Copilot, GTM Studio, and MarketingOS.
+        </p>
+        <a href="mailto:lucascolinmills@gmail.com" class="cta-button">Let's Talk</a>
+        <div style="margin-top: 30px; opacity: 0.8;">
+            <p>Lucas Mills | lucascolinmills@gmail.com | 301-525-2975</p>
+            <p><a href="https://linkedin.com/in/lucascolin-mills" style="color: white;">LinkedIn</a> | 
+               <a href="https://lucascolinmills.tiiny.site" style="color: white;">Portfolio</a></p>
+        </div>
+    </div>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Animate stats on scroll
+        const observerOptions = {
+            threshold: 0.5,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.6s ease forwards';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.stat-card, .experience-card, .metric-card').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Add CSS animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeInUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(30px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
