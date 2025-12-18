@@ -535,10 +535,11 @@
 
     <div class="hero">
         <h1>Context Engineering at Scale</h1>
-        <p class="subtitle">Building RAG Systems & Multi-Signal Intelligence Platforms</p>
+        <p class="subtitle">Production RAG Systems | Multi-Signal Context Assembly | Platform Infrastructure</p>
         <p class="intro">
-            A case study on architecting production RAG systems, integrating proprietary behavioral signals, 
-            and building reusable platform infrastructure that doubled ARR from $2M to $4.5M at GovTribe.
+            How I architected production RAG systems using Pinecone and OpenAI, integrated proprietary behavioral 
+            signals for 76% relevance rates, and built reusable platform infrastructure that accelerated engineering 
+            velocity 60% and contributed to doubling ARR from $2M to $4.5M at GovTribe.
         </p>
     </div>
 
@@ -5169,7 +5170,7 @@ TKPu2Jq4HfaGAh3F24N8Yjchn4grJRrTTRPSmUzfcIXHrofh0VNIofjkMesvIcxWCGULerzhAAAA" al
             <ul>
                 <li><strong>Data Enrichment Pipeline:</strong> Processed 100K+ contracts weekly, extracting metadata (NAICS codes, agency classifications, vendor relationships, historical patterns)</li>
                 <li><strong>Embedding Generation:</strong> Used OpenAI text-embedding-ada-002 (1536 dimensions) to create semantic representations of contracts</li>
-                <li><strong>Vector Storage:</strong> Elasticsearch with cosine similarity indexing for sub-500ms retrieval at scale</li>
+                <li><strong>Vector Storage (Pinecone):</strong> Chose Pinecone as managed vector database for sub-100ms similarity search using HNSW algorithm. Optimized through metadata filtering, batch operations, and approximate search tuning (ef=100 for 95% accuracy at 50ms latency)</li>
                 <li><strong>Context Compression:</strong> Reduced 8,000-token solicitations to 1,200 tokens while maintaining >90% accuracy through extractive summarization</li>
                 <li><strong>LLM Integration:</strong> OpenAI Chat Completions API with tiered routing (GPT-3.5 for simple queries, GPT-4 for complex analysis)</li>
                 <li><strong>Prompt Engineering:</strong> Structured outputs, few-shot examples, chain-of-thought reasoning for premium tier</li>
@@ -5920,11 +5921,12 @@ QbBiO9fe/gAAAAAAAAAAAAAAL0vCH+NcTCd+bAoWFxpUUAAAAAAAAMfDEjudojMqUHAAAAA=" alt="A
             <span class="tech-badge">Python</span>
             <span class="tech-badge">SQL</span>
             <span class="tech-badge">OpenAI API</span>
-            <span class="tech-badge">Elasticsearch</span>
+            <span class="tech-badge">Pinecone</span>
             <span class="tech-badge">Vector Embeddings</span>
             <span class="tech-badge">RAG Architecture</span>
             <span class="tech-badge">Prompt Engineering</span>
             <span class="tech-badge">A/B Testing</span>
+            <span class="tech-badge">Multi-Signal Scoring</span>
             <span class="tech-badge">Power BI</span>
             <span class="tech-badge">Data Pipelines</span>
             <span class="tech-badge">Redis</span>
@@ -5932,6 +5934,8 @@ QbBiO9fe/gAAAAAAAAAAAAAAL0vCH+NcTCd+bAoWFxpUUAAAAAAAAMfDEjudojMqUHAAAAA=" alt="A
             <span class="tech-badge">AWS</span>
             <span class="tech-badge">Databricks</span>
             <span class="tech-badge">Redshift</span>
+            <span class="tech-badge">HNSW Algorithm</span>
+            <span class="tech-badge">Cosine Similarity</span>
         </div>
     </div>
 
